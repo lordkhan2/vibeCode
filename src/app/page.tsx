@@ -24,19 +24,33 @@ const Page = () => {
             },
         }),
     );
+
     return (
-        <div className="h-screen w-screen flex items-center justify-center">
-            <div className="max-w-7xl mx-auto flex items-center flex-col gap-y-4 justify-center">
-                <Input
-                    value={value}
-                    onChange={(e) => setValue(e.target.value)}
-                />
-                <Button
-                    disabled={createProject.isPending}
-                    onClick={() => createProject.mutate({ value: value })}
-                >
-                    Submit
-                </Button>
+        <div className="h-screen w-screen flex items-center justify-center bg-background px-4">
+            <div className="max-w-xl w-full text-center space-y-6">
+                <div>
+                    <h1 className="text-4xl font-bold tracking-tight">
+                        Give a Prompt to Generate Your Website
+                    </h1>
+                    <p className="text-muted-foreground mt-2">
+                        Describe what you want and let us build it for you.
+                    </p>
+                </div>
+
+                <div className="flex items-center gap-2">
+                    <Input
+                        value={value}
+                        onChange={(e) => setValue(e.target.value)}
+                        placeholder="e.g. Portfolio for a designer"
+                        className="flex-1"
+                    />
+                    <Button
+                        disabled={createProject.isPending || !value.trim()}
+                        onClick={() => createProject.mutate({ value })}
+                    >
+                        {createProject.isPending ? "Generating..." : "Generate"}
+                    </Button>
+                </div>
             </div>
         </div>
     );
